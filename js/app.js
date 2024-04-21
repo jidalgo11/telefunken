@@ -30,13 +30,14 @@ class UI {
     playerRow.innerHTML = `
       <h3 class="text-2xl font-semibold mb-4">${newPlayer.name}</h3>
       <div class="scores flex flex-col">
-        <input type="text" class="round-1-score border rounded-md" value="0">
-        <input type="text" class="round-2-score border rounded-md" value="0">
-        <input type="text" class="round-3-score border rounded-md" value="0">
-        <input type="text" class="round-4-score border rounded-md" value="0">
-        <input type="text" class="round-5-score border rounded-md" value="0">
-        <input type="text" class="round-6-score border rounded-md" value="0">
-        <input type="text" class="round-7-score border rounded-md" value="0">
+        <label for="round-1" class="block mb-1 font-medium">Round 1</label>
+        <input type="text" id="round-1" class="round-1-score border rounded w-full p-2 mb-1" value="0">
+        <input type="number" class="round-2-score border rounded w-full p-2 mb-1" value="0">
+        <input type="number" class="round-3-score border rounded w-full p-2 mb-1" value="0">
+        <input type="number" class="round-4-score border rounded w-full p-2 mb-1" value="0">
+        <input type="number" class="round-5-score border rounded w-full p-2 mb-1" value="0">
+        <input type="number" class="round-6-score border rounded w-full p-2 mb-1" value="0">
+        <input type="number" class="round-7-score border rounded w-full p-2 mb-1" value="0">
       </div>
       <div class="player-score">Score: ${newPlayer.score}</div>
       <div class="buys">
@@ -72,9 +73,15 @@ newPlayer.addEventListener("submit", function (e) {
   if (players) {
     for (let player of players) {
       const scores = player.querySelector(".scores");
+      console.log(scores);
       const buys = player.querySelector(".buys");
       if (scores) {
         scores.addEventListener("change", updateScore);
+        for (let score of scores.querySelectorAll("input")) {
+          score.addEventListener("focus", function () {
+            score.select();
+          });
+        }
       }
       if (buys) {
         buys.addEventListener("click", updateBuys);
