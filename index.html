@@ -11,8 +11,8 @@
 </head>
 
 <body class="flex flex-col min-h-screen bg-gray-100 font-sans antialised">
-  <header class="bg-blue-700 py-8 md:p-6 shadow">
-    <div class="container flex flex-col md:flex-row justify-between items-center">
+  <header class="bg-blue-700 py-6 shadow-md">
+    <div class="container mx-auto px-3 flex flex-col md:flex-row justify-between items-center">
       <h1 class="text-5xl text-white font-bold md:mb-0 mb-5">Telefunken</h1>
       <form id="addPlayer">
         <input type="text" id="name" class="p-2 rounded-md border">
@@ -23,8 +23,88 @@
     </div>
   </header>
   <nav class="bg-indigo-500 py-2 md:hidden"></nav>
-  <div class="container py-4">
-    <div id="players" class="grid md:grid-cols-3 gap-5">
+  <div class="container mx-auto py-10 px-3 flex gap-4">
+    <!-- Leaderboard -->
+    <div id="leaderboard" class="bg-white md:w-1/4 rounded-md p-4 shadow-md">
+      <h2 class="text-3xl font-semibold mb-4">Leaderboard</h2>
+    </div>
+    <!-- Players -->
+    <div id="players" class="grid md:grid-cols-3 gap-4 p-3 rounded-md shadow-md bg-gray-200 md:w-3/4">
+      <div class="player-wrapper bg-white p-4 rounded-md shadow-md" data-id="player-id-1">
+        <h3 class="text-2xl font-semibold mb-4">Bess</h3>
+        <div class="scores flex flex-col">
+          <label for="round-1" class="block mb-1 font-medium">Round 1</label>
+          <input type="text" id="round-1" class="round-1-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-2-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-3-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-4-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-5-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-6-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-7-score border rounded w-full p-2 mb-1" value="0">
+        </div>
+        <div class="player-score">Score: 0</div>
+        <div class="buys">
+          <input type="checkbox" class="buy">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+        </div>
+        <div class="player-buys">Compras left: 8</div>
+      </div>
+      <div class="player-wrapper bg-white p-4 rounded-md shadow-md" data-id="player-id-1">
+        <h3 class="text-2xl font-semibold mb-4">Bess</h3>
+        <div class="scores flex flex-col">
+          <label for="round-1" class="block mb-1 font-medium">Round 1</label>
+          <input type="text" id="round-1" class="round-1-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-2-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-3-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-4-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-5-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-6-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-7-score border rounded w-full p-2 mb-1" value="0">
+        </div>
+        <div class="player-score">Score: 0</div>
+        <div class="buys">
+          <input type="checkbox" class="buy">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+        </div>
+        <div class="player-buys">Compras left: 8</div>
+      </div>
+      <div class="player-wrapper bg-white p-4 rounded-md shadow-md" data-id="player-id-1">
+        <h3 class="text-2xl font-semibold mb-4">Bess</h3>
+        <div class="scores flex flex-col">
+          <label for="round-1" class="block mb-1 font-medium">Round 1</label>
+          <input type="text" id="round-1" class="round-1-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-2-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-3-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-4-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-5-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-6-score border rounded w-full p-2 mb-1" value="0">
+          <input type="number" class="round-7-score border rounded w-full p-2 mb-1" value="0">
+        </div>
+        <div class="player-score">Score: 0</div>
+        <div class="buys">
+          <input type="checkbox" class="buy">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+          <input type="checkbox" class="buy" disabled="">
+        </div>
+        <div class="player-buys">Compras left: 8</div>
+      </div>
     </div>
   </div>
   <script src="js/app.js"></script>

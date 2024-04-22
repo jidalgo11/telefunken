@@ -7,7 +7,7 @@ const players = playersWrap.children;
 let playerArr = [];
 
 class Player {
-  constructor(name, score = 0, buys = 0) {
+  constructor(name, score = 0, buys = 8) {
     (this.name = name), (this.score = score), (this.buys = buys);
   }
 }
@@ -50,7 +50,7 @@ class UI {
         <input type="checkbox" class="buy" disabled>
         <input type="checkbox" class="buy" disabled>
       </div>
-      <div class="player-buys">Compras: ${newPlayer.buys}</div>
+      <div class="player-buys">Compras left: ${newPlayer.buys}</div>
     `;
 
     playersWrap.appendChild(playerRow);
@@ -99,7 +99,7 @@ function updateScore() {
     let scoreIn = parseInt(score.value);
     currentScore += isNaN(scoreIn) ? 0 : scoreIn;
   }
-  playerScore.textContent = currentScore; // Update player score as text content
+  playerScore.textContent = `Score: ${currentScore}`; // Update player score as text content
 }
 
 function updateBuys() {
@@ -107,20 +107,17 @@ function updateBuys() {
     this.closest(".player-wrapper").querySelector(".player-buys");
   const buys = this.closest(".buys");
   if (buys) {
-    let buyCount = 0;
+    let buyCount = 8;
     for (let buy of buys.querySelectorAll("input")) {
       if (buy.checked) {
-        buyCount += 1;
-        buy.disabled = true;
+        buyCount -= 1;
+        // buy.disabled = true;
         if (buy.nextElementSibling !== null) {
           buy.nextElementSibling.disabled = false;
         }
       }
     }
-    buyCount < 8
-      ? (playerBuys.textContent = `Compras: ${buyCount}`)
-      : (playerBuys.textContent = `Compras: Ya no mas!`);
-    // playerBuys.textContent = `Compras: ${buyCount}`;
+    playerBuys.textContent = `Compras left: ${buyCount}`;
   }
 }
 
