@@ -1,0 +1,1 @@
+input[type=checkbox]{-webkit-appearance:none;-moz-appearance:none;appearance:none;margin:0}input[type=checkbox] i{border:none}input[type=checkbox]:after{content:"";width:20px;height:20px;background:#fff;display:block;border:1px solid #b22222;border-radius:50%}input[type=checkbox]:checked:after{background:#b22222}

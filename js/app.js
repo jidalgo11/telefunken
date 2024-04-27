@@ -1,5 +1,7 @@
 const d = document;
 const buys = d.querySelector(".buy-wrapper");
+const leaderboard = d.querySelector("#leaderboard");
+const leaderboardScores = d.querySelector("#leaderboardScores");
 const newPlayer = d.querySelector("#addPlayer");
 const playersWrap = d.querySelector("#players");
 const players = playersWrap.children;
@@ -7,7 +9,7 @@ const players = playersWrap.children;
 let playerArr = [];
 
 class Player {
-  constructor(name, score = 0, buys = 8) {
+  constructor(name, score = 0, buys = 12) {
     (this.name = name), (this.score = score), (this.buys = buys);
   }
 }
@@ -17,7 +19,9 @@ class UI {
     let newPlayer = new Player(playerName);
     let playersLength = players.length;
     const playerRow = d.createElement("div");
+    const playerScoreRow = d.createElement("div");
 
+    // Player Row
     playerRow.classList.add(
       "player-wrapper",
       "bg-white",
@@ -25,10 +29,18 @@ class UI {
       "rounded-md",
       "shadow-md"
     );
-    playerRow.setAttribute("data-id", "player-id-" + (playersLength + 1));
+    playerRow.setAttribute(
+      "data-player-id",
+      `${newPlayer.name.toLowerCase()}_${playersLength + 1}`
+    );
+
+    playerScoreRow.setAttribute(
+      "id",
+      `${newPlayer.name.toLowerCase()}_${playersLength + 1}`
+    );
 
     playerRow.innerHTML = `
-      <h3 class="text-2xl font-semibold mb-4">${newPlayer.name}</h3>
+      <h3 class="text-2xl font-semibold mb-4 text-blue-700">${newPlayer.name}</h3>
       <div class="scores flex flex-col">
         <label for="round-1" class="block mb-1 font-medium">Round 1</label>
         <input type="text" id="round-1" class="round-1-score border rounded w-full p-2 mb-1" value="0">
@@ -42,18 +54,32 @@ class UI {
       <div class="player-score">Score: ${newPlayer.score}</div>
       <div class="buys">
         <input type="checkbox" class="buy">
-        <input type="checkbox" class="buy" disabled>
-        <input type="checkbox" class="buy" disabled>
-        <input type="checkbox" class="buy" disabled>
-        <input type="checkbox" class="buy" disabled>
-        <input type="checkbox" class="buy" disabled>
-        <input type="checkbox" class="buy" disabled>
-        <input type="checkbox" class="buy" disabled>
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
+        <input type="checkbox" class="buy">
       </div>
       <div class="player-buys">Compras left: ${newPlayer.buys}</div>
     `;
 
+    playerScoreRow.classList.add("test");
+
+    playerScoreRow.innerHTML = `
+    <div class="px-4 grid grid-cols-5">
+      <h4 class="col-span-3">${playersLength + 1} ${newPlayer.name}</h4>
+      <p>${newPlayer.score}</p>
+      <p>${newPlayer.buys}</p>
+    </div>
+    `;
     playersWrap.appendChild(playerRow);
+    leaderboardScores.appendChild(playerScoreRow);
   }
 }
 
@@ -73,7 +99,6 @@ newPlayer.addEventListener("submit", function (e) {
   if (players) {
     for (let player of players) {
       const scores = player.querySelector(".scores");
-      console.log(scores);
       const buys = player.querySelector(".buys");
       if (scores) {
         scores.addEventListener("change", updateScore);
@@ -96,8 +121,13 @@ function updateScore() {
   const scores = this.closest(".scores");
   let currentScore = 0;
   for (let score of scores.querySelectorAll("input")) {
-    let scoreIn = parseInt(score.value);
-    currentScore += isNaN(scoreIn) ? 0 : scoreIn;
+    if (score.value >= 0) {
+      let scoreIn = parseInt(score.value);
+      currentScore += isNaN(scoreIn) ? 0 : scoreIn;
+    } else {
+      alert("Score cannot be less than 0");
+      score.value = 0;
+    }
   }
   playerScore.textContent = `Score: ${currentScore}`; // Update player score as text content
 }
@@ -107,14 +137,10 @@ function updateBuys() {
     this.closest(".player-wrapper").querySelector(".player-buys");
   const buys = this.closest(".buys");
   if (buys) {
-    let buyCount = 8;
+    let buyCount = 12;
     for (let buy of buys.querySelectorAll("input")) {
       if (buy.checked) {
         buyCount -= 1;
-        // buy.disabled = true;
-        if (buy.nextElementSibling !== null) {
-          buy.nextElementSibling.disabled = false;
-        }
       }
     }
     playerBuys.textContent = `Compras left: ${buyCount}`;
