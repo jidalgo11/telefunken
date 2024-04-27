@@ -19,9 +19,13 @@ class UI {
     let newPlayer = new Player(playerName);
     let playersLength = players.length;
     const playerRow = d.createElement("div");
-    const playerScoreRow = d.createElement("div");
+    const playerLeaderboardRow = d.createElement("div");
 
-    playersWrap.classList.add("bg-gray-100", "rounded-md", "shadow-md");
+    playersWrap.classList.add(
+      "lg:bg-gray-200",
+      "lg:rounded-md",
+      "lg:shadow-md"
+    );
 
     // Player Row
     playerRow.classList.add(
@@ -31,12 +35,23 @@ class UI {
       "rounded-md",
       "shadow-md"
     );
+
     playerRow.setAttribute(
       "data-player-id",
       `${newPlayer.name.toLowerCase()}_${playersLength + 1}`
     );
 
-    playerScoreRow.setAttribute(
+    playerRow.setAttribute(
+      "data-score-id",
+      `${newPlayer.name.toLowerCase()}_${playersLength + 1}_score`
+    );
+
+    playerRow.setAttribute(
+      "data-buys-id",
+      `${newPlayer.name.toLowerCase()}_${playersLength + 1}_buys`
+    );
+
+    playerLeaderboardRow.setAttribute(
       "id",
       `${newPlayer.name.toLowerCase()}_${playersLength + 1}`
     );
@@ -71,17 +86,19 @@ class UI {
       <div class="player-buys">Compras left: ${newPlayer.buys}</div>
     `;
 
-    playerScoreRow.classList.add("test");
-
-    playerScoreRow.innerHTML = `
+    playerLeaderboardRow.innerHTML = `
     <div class="px-4 grid grid-cols-5">
       <h4 class="col-span-3">${playersLength + 1} ${newPlayer.name}</h4>
-      <p>${newPlayer.score}</p>
-      <p>${newPlayer.buys}</p>
+      <p id="${newPlayer.name.toLowerCase()}_${playersLength + 1}_score">${
+      newPlayer.score
+    }</p>
+      <p id="${newPlayer.name.toLowerCase()}_${playersLength + 1}_buys">${
+      newPlayer.buys
+    }</p>
     </div>
     `;
     playersWrap.appendChild(playerRow);
-    leaderboardScores.appendChild(playerScoreRow);
+    leaderboardScores.appendChild(playerLeaderboardRow);
   }
 }
 
@@ -102,8 +119,10 @@ newPlayer.addEventListener("submit", function (e) {
     for (let player of players) {
       const scores = player.querySelector(".scores");
       const buys = player.querySelector(".buys");
+
       if (scores) {
         scores.addEventListener("change", updateScore);
+
         for (let score of scores.querySelectorAll("input")) {
           score.addEventListener("focus", function () {
             score.select();
@@ -118,11 +137,13 @@ newPlayer.addEventListener("submit", function (e) {
 });
 
 function updateScore() {
+  const playerId = this.closest(".player-wrapper").dataset.scoreId;
+  const leaderboardScore = document.getElementById(playerId);
   const playerScore =
     this.closest(".player-wrapper").querySelector(".player-score");
-  const scores = this.closest(".scores");
   let currentScore = 0;
-  for (let score of scores.querySelectorAll("input")) {
+
+  for (let score of this.querySelectorAll("input")) {
     if (score.value >= 0) {
       let scoreIn = parseInt(score.value);
       currentScore += isNaN(scoreIn) ? 0 : scoreIn;
@@ -132,87 +153,25 @@ function updateScore() {
     }
   }
   playerScore.textContent = `Score: ${currentScore}`; // Update player score as text content
+  leaderboardScore.textContent = currentScore;
 }
 
 function updateBuys() {
+  const playerId = this.closest(".player-wrapper").dataset.buysId;
+  const leaderboardBuys = document.getElementById(playerId);
+
+  console.log(playerId);
   const playerBuys =
     this.closest(".player-wrapper").querySelector(".player-buys");
-  const buys = this.closest(".buys");
-  if (buys) {
+  console.log(this);
+  if (this) {
     let buyCount = 12;
-    for (let buy of buys.querySelectorAll("input")) {
+    for (let buy of this.querySelectorAll("input")) {
       if (buy.checked) {
         buyCount -= 1;
       }
     }
     playerBuys.textContent = `Compras left: ${buyCount}`;
+    leaderboardBuys.textContent = buyCount;
   }
 }
-
-// // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-
-// // const addPlayer = d.querySelector("#addPlayer");
-// // const scores = d.querySelectorAll("#scores");
-// // const players = d.querySelectorAll("#players > div");
-
-// // players.forEach((player) => (i) => {
-// //   console.log(player);
-// // });
-
-// // console.log(players);
-
-// // class UI {
-// //   static addPlayer(player) {
-// //     const players = document.querySelector("#players");
-
-// //     const row = document.createElement("div");
-
-// //     row.classList.add = "123";
-// //     row.innerHTML = `
-// //       <div>${player.name}</div>
-// //       <div id="scores">
-// //         <input type="text" id="round-1-score">
-// //         <input type="text" id="round-2-score">
-// //         <input type="text" id="round-3-score">
-// //         <input type="text" id="round-4-score">
-// //         <input type="text" id="round-5-score">
-// //         <input type="text" id="round-6-score">
-// //         <input type="text" id="round-7-score">
-// //       </div>
-// //       <div>${player.score}</div>
-// //       <div>${player.buys}</div>
-
-// //     `;
-
-// //     players.appendChild(row);
-// //   }
-
-// // // Event Add Player
-
-// // addPlayer.addEventListener("submit", function (e) {
-// //   e.preventDefault();
-
-// //   let name = document.querySelector("#name").value;
-
-// //   if (name === "" || name.length < 2) {
-// //     alert("Please enter a valid name");
-// //   } else {
-// //     let player = new Player(name);
-
-// //     UI.addPlayer(player);
-
-// //     UI.getScore();
-
-// //     console.log(scores);
-// //   }
-// // });
-
-// // // if (scores) {
-// // //   scores.addEventListener("click", UI.getScore());
-// // // }
-
-// // // Event Update Score
-
-// // // Event Update Buys
-
-// // // TODO: Save player data to local storage
