@@ -21,6 +21,8 @@ class UI {
     const playerRow = d.createElement("div");
     const playerScoreRow = d.createElement("div");
 
+    playersWrap.classList.add("bg-gray-100", "rounded-md", "shadow-md");
+
     // Player Row
     playerRow.classList.add(
       "player-wrapper",
@@ -52,7 +54,7 @@ class UI {
         <input type="number" class="round-7-score border rounded w-full p-2 mb-1" value="0">
       </div>
       <div class="player-score">Score: ${newPlayer.score}</div>
-      <div class="buys">
+      <div class="buys flex flex-row flex-wrap gap-x-2 gap-y-1">
         <input type="checkbox" class="buy">
         <input type="checkbox" class="buy">
         <input type="checkbox" class="buy">
