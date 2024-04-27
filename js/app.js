@@ -60,19 +60,19 @@ class UI {
       <h3 class="text-3xl font-semibold mb-4 text-blue-700">${newPlayer.name}</h3>
       <div class="scores flex flex-col mb-4">
         <label for="round-1" class="block mb-1 font-medium text-sm px-1">Round 1</label>
-        <input type="text" id="round-1" class="round-1-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-1" class="round-1-score border rounded w-full p-2 mb-2" value="0">
         <label for="round-2" class="block mb-1 font-medium text-sm px-1">Round 2</label>
-        <input type="number" id="round-2" class="round-2-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-2" class="round-2-score border rounded w-full p-2 mb-2" value="0">
         <label for="round-3" class="block mb-1 font-medium text-sm px-1">Round 3</label>
-        <input type="number" id="round-3" class="round-3-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-3" class="round-3-score border rounded w-full p-2 mb-2" value="0">
         <label for="round-4" class="block mb-1 font-medium text-sm px-1">Round 4</label>
-        <input type="number" id="round-4" class="round-4-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-4" class="round-4-score border rounded w-full p-2 mb-2" value="0">
         <label for="round-5" class="block mb-1 font-medium text-sm px-1">Round 5</label>
-        <input type="number" id="round-5" class="round-5-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-5" class="round-5-score border rounded w-full p-2 mb-2" value="0">
         <label for="round-6" class="block mb-1 font-medium text-sm px-1">Round 6</label>
-        <input type="number" id="round-6" class="round-6-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-6" class="round-6-score border rounded w-full p-2 mb-2" value="0">
         <label for="round-7" class="block mb-1 font-medium text-sm px-1">Round 7</label>
-        <input type="number" id="round-7" class="round-7-score border rounded w-full p-2 mb-2" value="0">
+        <input type="number" pattern="[0-9]*" id="round-7" class="round-7-score border rounded w-full p-2 mb-2" value="0">
       </div>
       <h3 class="text-xl font-semibold mb-3 text-red-600">Buys</h3>
       <div class="buys flex flex-row flex-wrap gap-x-2 gap-y-1">
@@ -132,10 +132,8 @@ newPlayer.addEventListener("submit", function (e) {
 
         for (let score of scores.querySelectorAll("input")) {
           score.addEventListener("focus", function (e) {
-            if ("ontouchstart" in window || navigator.maxTouchPoints) {
-              e.preventDefault();
-              score.select();
-            }
+            e.preventDefault();
+            score.select();
           });
         }
       }
