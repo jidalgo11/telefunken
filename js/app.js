@@ -115,7 +115,6 @@ newPlayer.addEventListener("submit", function (e) {
   let name = d.querySelector("#name");
   playerArr.push(new Player(name.value));
 
-  // addPlayerEl(name);
   if (!name.value || name.value.length < 2) {
     alert("Please enter a valid name");
   } else {
@@ -132,8 +131,11 @@ newPlayer.addEventListener("submit", function (e) {
         scores.addEventListener("change", updateScore);
 
         for (let score of scores.querySelectorAll("input")) {
-          score.addEventListener("focus", function () {
-            score.select();
+          score.addEventListener("focus", function (e) {
+            if ("ontouchstart" in window || navigator.maxTouchPoints) {
+              e.preventDefault();
+              score.select();
+            }
           });
         }
       }
