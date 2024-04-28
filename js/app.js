@@ -4,6 +4,7 @@ const leaderboard = d.querySelector("#leaderboard");
 const leaderboardScores = d.querySelector("#leaderboardScores");
 const newPlayer = d.querySelector("#addPlayer");
 const playersWrap = d.querySelector("#players");
+const playerNav = d.querySelector("#playerNav");
 const players = playersWrap.children;
 
 let playerArr = [];
@@ -19,7 +20,7 @@ class UI {
     let newPlayer = new Player(playerName);
     let playersLength = players.length;
     const playerRow = d.createElement("div");
-    const playerLeaderboardRow = d.createElement("ul");
+    const playerLeaderboardRow = d.createElement("li");
 
     playersWrap.classList.add(
       "lg:bg-gray-200",
@@ -35,6 +36,8 @@ class UI {
       "rounded-md",
       "shadow-md"
     );
+
+    playerRow.setAttribute("id", `${playerName}_link`);
 
     playerRow.setAttribute(
       "data-player-id",
@@ -92,8 +95,8 @@ class UI {
     `;
 
     playerLeaderboardRow.innerHTML = `
-    <li class="px-4 grid grid-cols-5">
-      <h4 class="col-span-3 font-semibold text-lg text-blue-900">${
+    <div class="px-4 grid grid-cols-5">
+      <h4 class="col-span-3 font-semibold text-lg text-blue-900 pl-1">${
         playersLength + 1
       } ${newPlayer.name}</h4>
       <p class="font-semibold text-green-600 text-center" id="${newPlayer.name.toLowerCase()}_${
@@ -102,11 +105,29 @@ class UI {
       <p class="font-semibold text-red-600 text-center" id="${newPlayer.name.toLowerCase()}_${
       playersLength + 1
     }_buys">${newPlayer.buys}</p>
-    </li>
+    </div>
     <hr>
     `;
     playersWrap.appendChild(playerRow);
     leaderboardScores.appendChild(playerLeaderboardRow);
+  }
+
+  static addPlayerToNav(playerName) {
+    const playerLink = document.createElement("a");
+
+    playerLink.classList.add(
+      "text-white",
+      "font-semibold",
+      "text-center",
+      "text-lg",
+      "py-1"
+    );
+
+    // playerNav.classList.add("h-32");
+
+    playerLink.innerHTML = playerName;
+    playerLink.setAttribute("href", `#${playerName}_link`);
+    playerNav.append(playerLink);
   }
 }
 
@@ -119,6 +140,7 @@ newPlayer.addEventListener("submit", function (e) {
     alert("Please enter a valid name");
   } else {
     UI.addPlayer(name.value);
+    UI.addPlayerToNav(name.value);
     name.value = " ";
   }
 
@@ -159,6 +181,13 @@ function updateScore() {
     }
   }
   leaderboardScore.textContent = currentScore;
+  updateLeaderboard();
+}
+
+function updateLeaderboard() {
+  for (let score of leaderboardScores.children) {
+    console.log(score);
+  }
 }
 
 function updateBuys() {
